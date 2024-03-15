@@ -19,18 +19,18 @@ interface ChartProps {
 
 function Chart({ coinId }: ChartProps) {
   const { isLoading, data } = useQuery<IHistorical[]>(["ohlcv", coinId], () => fetchCoinHistory(coinId));
-  // console.log('aaa data: ', data?.map(price => Number(price.close)) ?? [])
+
   return (
     <div>
       {
         isLoading ? 
         "Loading chart..." : 
-        <ApexChart 
-          type="line"
+        <ApexChart
+          type="candlestick"
           series={[
             {
-              name: "price",
-              data: data?.map(price => Number(price.close)) ?? []
+              name: 'price',
+              data: data?.map(price => [price.time_close, Number(price.open), Number(price.high), Number(price.low), Number(price.close)]) ?? []
             }
           ]}
           options={{
@@ -70,17 +70,8 @@ function Chart({ coinId }: ChartProps) {
                 formatter: (value) => `$${value.toFixed(2)}`,
               },
             },
-          }}/>
-        // <ApexChart 
-        //   type="line"
-        //   series={[
-        //     {
-        //       name: 'sales',
-        //       data: [1,2,3,4,5,6]
-        //     }
-        //   ]}
-        // />
-
+          }}
+          />
       }
     </div>
   )

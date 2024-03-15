@@ -31,7 +31,7 @@ const CoinsList = styled.ul``;
 
 const Coin = styled.li`
   background-color: white;
-  color: ${(props) => props.theme.bgColor};
+  color: ${(props) => props.theme.textColor};
   border-radius: 15px;
   margin-bottom: 10px;
   a {
@@ -62,12 +62,15 @@ const Img = styled.img`
   margin-right: 10px;
 `;
 
-function Coins() {
+interface ICoinsProps {
+}
+
+function Coins({ }: ICoinsProps) {
   const { isLoading, data } = useQuery<ICoin[]>("allCoins", fetchCoins);
 
   return <Container>
     <Header>
-      <Title>코인</Title>
+      <Title>Coins</Title>
     </Header>
     {
       isLoading ? 
@@ -80,8 +83,10 @@ function Coins() {
               pathname: `/${coin.id}`,
               state: { name: coin.name }
             }}>
+            {/* {coin} */}
               <Img 
-                src={`https://coinicons-api.vercel.app/api/icon/${coin.symbol.toLowerCase()}`}
+                // src={`https://coinicons-api.vercel.app/api/icon/${coin.symbol.toLowerCase()}`}
+                src={`https://cryptocurrencyliveprices.com/img/${coin.symbol.toLowerCase()}-${coin.name.toLowerCase()}.png`}
                 alt="coin-symbol"/>
               {coin.name} &rarr;
             </Link>
