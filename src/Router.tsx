@@ -8,11 +8,11 @@ interface IRouterProps {
 function Router({  }: IRouterProps) {
   return <BrowserRouter>
     <Switch>
-      <Route path="/:coinId">
+      <Route path={`${process.env.PUBLIC_URL}/:coinId`}>
         <Coin/>
       </Route>
 
-      <Route path="/">
+      <Route path={`${process.env.PUBLIC_URL}/`}>
         <Coins />
       </Route>
     </Switch>
