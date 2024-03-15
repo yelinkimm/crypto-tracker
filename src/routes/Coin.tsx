@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link, Route, Switch, useLocation, useParams, useRouteMatch } from "react-router-dom";
+import { Link, Route, Switch, useHistory, useLocation, useParams, useRouteMatch } from "react-router-dom";
 import styled from "styled-components";
 import Price from "./Price";
 import Chart from "./Chart";
@@ -83,6 +83,7 @@ const Header = styled.header`
   display: flex;
   justify-content: center;
   align-items: center;
+  position: relative;
 `;
 
 const Loader = styled.span`
@@ -138,6 +139,17 @@ const Tab = styled.span<{ isActive: boolean }>`
   }
 `;
 
+const PreviousBtn = styled.button`
+  width: 40px;
+  height: 40px;
+  position: absolute;
+  left: 0;
+  background: none;
+  border: none;
+  color: ${(props) => props.theme.accentColor};
+  cursor: pointer;
+`;
+
 function Coin() {
   // const [loading, setLoading] = useState(true);
   // const [priceInfo, setPriceInfo] = useState<PriceData>();
@@ -160,6 +172,12 @@ function Coin() {
     { refetchInterval: 100000 }
   );
 
+  const history = useHistory();
+
+  const goToHome = () => {
+    history.push("/");
+  }
+
   // useEffect(() => {
   //   (async () => {
   //     const infoData = await (
@@ -180,11 +198,19 @@ function Coin() {
 
   return (
     <Container>
+
       <Header>
+        <PreviousBtn onClick={goToHome}>
+          <svg data-slot="icon" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path clip-rule="evenodd" fill-rule="evenodd" d="M11.03 3.97a.75.75 0 0 1 0 1.06l-6.22 6.22H21a.75.75 0 0 1 0 1.5H4.81l6.22 6.22a.75.75 0 1 1-1.06 1.06l-7.5-7.5a.75.75 0 0 1 0-1.06l7.5-7.5a.75.75 0 0 1 1.06 0Z"></path>
+          </svg>
+        </PreviousBtn>
+
         <Title>
           {state?.name ? state.name : loading ? "Loading..." : infoData?.name}
         </Title>
       </Header>
+
       {loading ? (
         <Loader>Loading...</Loader>
       ) : (
