@@ -251,10 +251,10 @@ function Coin() {
           </Tabs>
 
           <Switch>
-            <Route path={`/:coinId/price`}>
+            <Route path={`${process.env.PUBLIC_URL}/:coinId/price`}>
               <Price tickersData={tickersData}/>
             </Route>
-            <Route path={`/:coinId/chart`}>
+            <Route path={`${process.env.PUBLIC_URL}/:coinId/chart`}>
               <Chart coinId={coinId}/>
             </Route>
           </Switch>
