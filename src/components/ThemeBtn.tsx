@@ -1,12 +1,8 @@
-import { Dispatch, SetStateAction } from "react";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 import styled from "styled-components";
+import { isDarkAtom } from "../atoms";
 
-interface IThemeBtn {
-  isDark: boolean;
-  setIsDark: Dispatch<SetStateAction<boolean>>;
-}
-
-function ThemeBtn({ isDark, setIsDark }: IThemeBtn) {
+function ThemeBtn() {
   const ToggleBtn = styled.button`
     width: 40px;
     height: 40px;
@@ -36,8 +32,11 @@ function ThemeBtn({ isDark, setIsDark }: IThemeBtn) {
 
   `;
 
+  const setDarkAtom = useSetRecoilState(isDarkAtom); // value를 설정하는 function
+  const isDark = useRecoilValue(isDarkAtom)
+
   const changeTheme = () => {
-    setIsDark((current) => !current);
+    setDarkAtom((prev) => !prev)
   }
 
   return (
